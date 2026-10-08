@@ -12,24 +12,22 @@ _This guide explains how to clone the `OneTrueC/mouseTrail` repository, build `m
 
 ### `mousetrail`
 
-O `mousetrail` é um programa escrito em C que cria um rastro visual para o ponteiro do _mouse_ usando o sistema de janelas `X11`. O código-fonte permite habilitar um efeito de arco-íris e configurar a quantidade e o intervalo das cópias do ponteiro.
-
-O programa não é instalado como um pacote `mousetrail` dos repositórios do `apt`. O `apt` é usado para instalar o compilador, o `Git` e os arquivos de desenvolvimento necessários; o programa é obtido do repositório oficial e compilado localmente.
+O `mousetrail` é um programa escrito em `C` que cria um rastro visual para o ponteiro do _mouse_ usando o sistema de janelas `X11`. O código-fonte permite habilitar um efeito de arco-íris e configurar a quantidade e o intervalo das cópias do ponteiro.
 
 ## Pré-requisitos
 
 - Uma sessão gráfica `X11`. O programa usa `Xlib` e `Xfixes`; não há suporte declarado a sessões `Wayland`.
 - Permissão para usar `sudo` para instalar as dependências e o executável em `/usr/local`.
-- Conexão com a internet para acessar os repositórios do `Linux Ubuntu` e o `GitHub`.
+- Conexão com a _internet_ para acessar os repositórios do `Linux Ubuntu` e o `GitHub`.
 - O diretório `~/mouseTrail` ainda não deve existir antes da clonagem inicial.
 
 ## 1. Abrir o `Terminal Emulator`
 
 1. Abrir o `Terminal Emulator`. Você pode fazer isso pressionando:
 
-```bash
-Ctrl + Alt + T
-```
+    ```bash
+    Ctrl + Alt + T
+    ```
 
 2. Certifique-se de que seu sistema esteja limpo e atualizado.
 
@@ -84,7 +82,7 @@ Ctrl + Alt + T
 
 ## 3. Instalar as dependências e compilar o `mousetrail`
 
-1. Instalar o `Git`, o compilador C e os arquivos de desenvolvimento de `X11` e `Xfixes`:
+1. Instalar o `Git`, o compilador `C` e os arquivos de desenvolvimento de `X11` e `Xfixes`:
 
     ```bash
     sudo apt install git build-essential libx11-dev libxext-dev libxfixes-dev -y
@@ -177,7 +175,7 @@ O arquivo `.desktop` em `~/.config/autostart/` inicia o programa quando o ambien
     mousetrail
     ```
 
-O programa permanece ativo enquanto cria o rastro. Pressionar `Ctrl + C` no terminal para encerrá-lo. No próximo início de sessão gráfica, o ambiente deverá iniciá-lo pelo arquivo de _autostart_.
+O programa permanece ativo enquanto cria o rastro. Pressionar `Ctrl + C` no `Terminal Emulator` para encerrá-lo. No próximo início de sessão gráfica, o ambiente deverá iniciá-lo pelo arquivo de _autostart_.
 
 3. Para impedir que ele inicie automaticamente, remover a entrada:
 
@@ -200,10 +198,24 @@ Para relatar problemas ou consultar o código, acessar `OneTrueC/mouseTrail` no 
 
 ## Referências
 
-[1] OPENAI. **Instalar o `mousetrail` no `linux ubuntu` pelo `terminal emulator`**. Disponível em: <https://chatgpt.com/g/g-p-6980caf949648191ad6acfcdbe590f9e-instalar/c/6ac754e0-d664-83ea-906a-50fab09b9f73>. ChatGPT. Acessado em: 08/10/2026.
+[1] OPENAI.
+**Instalar o `mousetrail` no `linux ubuntu` pelo `terminal emulator`**.
+Disponível em: <https://chatgpt.com/g/g-p-6980caf949648191ad6acfcdbe590f9e-instalar/c/6ac754e0-d664-83ea-906a-50fab09b9f73>.
+ChatGPT.
+Acessado em: 08/10/2026.
 
-[2] ONETRUEC. **Mousetrail: programa de rastro do ponteiro para `X11`**. Disponível em: <https://github.com/OneTrueC/mouseTrail>. GitHub. Acessado em: 08/10/2026.
+[2] ONETRUEC.
+**Mousetrail: programa de rastro do ponteiro para `X11`**.
+Disponível em: <https://github.com/OneTrueC/mouseTrail>.
+GitHub.
+Acessado em: 08/10/2026.
 
-[3] UBUNTU. **Gerenciar pacotes e instalar _software_**. Disponível em: <https://ubuntu.com/server/docs/package-management/>. Acessado em: 08/10/2026.
+[3] UBUNTU.
+**Gerenciar pacotes e instalar _software_**.
+Disponível em: <https://ubuntu.com/server/docs/package-management/>.
+Acessado em: 08/10/2026.
 
-[4] FREEDESKTOP. **Especificação de inicialização automática de aplicativos**. Disponível em: <https://specifications.freedesktop.org/autostart/latest/>. Acessado em: 08/10/2026.
+[4] FREEDESKTOP.
+**Especificação de inicialização automática de aplicativos**.
+Disponível em: <https://specifications.freedesktop.org/autostart/latest/>.
+Acessado em: 08/10/2026.
