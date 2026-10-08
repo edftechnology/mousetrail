@@ -26,6 +26,10 @@
 	path = subs/submodules/txt_scripts
 	url = git@github.com:edftechnology/txt_scripts.git
 	branch = main
+[submodule "docs/mouseTrail"]
+	path = docs/mouseTrail
+	url = https://github.com/OneTrueC/mouseTrail.git
+	branch = master
 [submodule ".github/workflows"]
 	path = .github/workflows
 	url = git@github.com:edftechnology/workflows.git

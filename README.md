@@ -1,56 +1,27 @@
-<!-- LOGOTIPO DO PROJETO -->
-<div style="display: flex; justify-content: center;">
-   <a href="https://github.com/SEU-USUARIO/SEU-PROJETO">
-     <img src="docs/figures/logo.png" alt="Logo" width="200" height="100">
-   </a>
-</div>
-
-<h3 align="center">NomeDoProjeto</h3>
-
-<div style="display: flex; justify-content: center;">
-  <a href="https://doi.org/SEU-DOI">
-    <img src="https://zenodo.org/badge/SEU_BADGE.svg" alt="DOI">
-  </a>
-</div>
-
-<p align="center">
- Uma descrição curta e genérica do projeto. Substitua por um resumo real quando usar este template.
- <br />
- <a href="https://github.com/SEU-USUARIO/SEU-PROJETO"><strong>Explore os documentos »</strong></a>
- <br />
- <br />
- <a href="https://github.com/SEU-USUARIO/SEU-PROJETO">Ver demonstração</a>
- ·
- <a href="https://github.com/SEU-USUARIO/SEU-PROJETO">Relatar bug</a>
- ·
- <a href="https://github.com/SEU-USUARIO/SEU-PROJETO">Solicitar recurso</a>
-</p>
-
-
-
-
 # Como instalar/configurar/usar o `mousetrail` no `Linux Ubuntu`
 
 ## Resumo
 
-Este guia apresenta como procurar e instalar o `mousetrail` pelo `apt` no `Linux Ubuntu`, verificar a instalação e iniciar o programa.
+Este guia explica como clonar o repositório `OneTrueC/mouseTrail`, compilar o `mousetrail` com as bibliotecas do `X11` e configurá-lo para iniciar automaticamente na sessão gráfica do `Linux Ubuntu`.
 
 ## _Abstract_
 
-_This guide explains how to find and install `mousetrail` with `apt` on `Linux Ubuntu`, verify the installation, and launch the program._
+_This guide explains how to clone the `OneTrueC/mouseTrail` repository, build `mousetrail` with the `X11` libraries, and configure it to start automatically in a `Linux Ubuntu` graphical session._
 
 ## Descrição
 
 ### `mousetrail`
 
-O `mousetrail` cria um rastro visual para o ponteiro do mouse no sistema de janelas `X11` e pode aplicar um efeito de arco-íris. O projeto upstream é disponibilizado como código-fonte no GitHub.
+O `mousetrail` é um programa escrito em C que cria um rastro visual para o ponteiro do _mouse_ usando o sistema de janelas `X11`. O código-fonte permite habilitar um efeito de arco-íris e configurar a quantidade e o intervalo das cópias do ponteiro.
+
+O programa não é instalado como um pacote `mousetrail` dos repositórios do `apt`. O `apt` é usado para instalar o compilador, o `Git` e os arquivos de desenvolvimento necessários; o programa é obtido do repositório oficial e compilado localmente.
 
 ## Pré-requisitos
 
-- Usar uma sessão gráfica baseada em `X11`; o projeto não declara suporte a sessões `Wayland`.
-- Ter permissão para usar `sudo`.
-- Ter os repositórios oficiais do `Linux Ubuntu` configurados e acesso à internet.
-- O pacote precisa estar disponível nas fontes `apt` habilitadas para a versão instalada do `Linux Ubuntu`.
+- Uma sessão gráfica `X11`. O programa usa `Xlib` e `Xfixes`; não há suporte declarado a sessões `Wayland`.
+- Permissão para usar `sudo` para instalar as dependências e o executável em `/usr/local`.
+- Conexão com a internet para acessar os repositórios do `Linux Ubuntu` e o `GitHub`.
+- O diretório `~/mouseTrail` ainda não deve existir antes da clonagem inicial.
 
 ## 1. Abrir o `Terminal Emulator`
 
@@ -63,7 +34,7 @@ Ctrl + Alt + T
 2. Certifique-se de que seu sistema esteja limpo e atualizado.
 
     2.1 Limpar o `cache` do gerenciador de pacotes `apt`. Especificamente, ele remove todos os arquivos de pacotes (`.deb`) baixados pelo `apt` e armazenados em `/var/cache/apt/archives/`. Digite o seguinte comando:
-
+        
     ```bash
     sudo apt clean
     ```
@@ -110,29 +81,46 @@ Ctrl + Alt + T
     sudo apt full-upgrade -y
     ```
 
-## 3. Procurar o pacote `mousetrail`
 
-Antes de instalar, verificar se o pacote está nos repositórios habilitados para a versão do `Linux Ubuntu` em uso.
+## 3. Instalar as dependências e compilar o `mousetrail`
 
-1. Atualizar o índice de pacotes e procurar o nome exato:
-
-    ```bash
-    sudo apt update
-    apt search '^mousetrail$'
-    apt policy mousetrail
-    ```
-
-2. Se `apt policy mousetrail` mostrar um candidato, instalar o pacote:
+1. Instalar o `Git`, o compilador C e os arquivos de desenvolvimento de `X11` e `Xfixes`:
 
     ```bash
-    sudo apt install mousetrail -y
+    sudo apt install git build-essential libx11-dev libxext-dev libxfixes-dev -y
     ```
 
-3. Se não houver candidato e a busca não listar o pacote, os repositórios `apt` configurados não fornecem `mousetrail`. Não instalar `gnome-mousetrap` como substituto: é outro aplicativo, voltado ao controle do ponteiro por movimentos da cabeça. Consulte a página upstream indicada em **Referências** para verificar as opções disponibilizadas pelo desenvolvedor.
+2. Clonar o repositório oficial em `~/mouseTrail`:
+
+    ```bash
+    git clone https://github.com/OneTrueC/mouseTrail.git "$HOME/mouseTrail"
+    ```
+
+3. Compilar o programa no diretório clonado:
+
+    ```bash
+    make -C "$HOME/mouseTrail"
+    ```
+
+4. Instalar o executável e a página de manual em `/usr/local`:
+
+    ```bash
+    cd "$HOME/mouseTrail"
+    sudo mkdir -p /usr/local/bin /usr/local/share/man/man1
+    sudo make install
+    ```
+
+5. Confirmar o caminho do executável:
+
+    ```bash
+    command -v mousetrail
+    ```
+
+O `Makefile` do projeto instala o executável em `/usr/local/bin/mousetrail`.
 
 ## 1.1 Código completo para configurar/instalar/usar
 
-Para instalar o `mousetrail` no `Linux Ubuntu` quando o pacote estiver disponível nos repositórios configurados, seguir estas etapas:
+Para clonar, compilar, instalar e configurar o início automático do `mousetrail` no `Linux Ubuntu`, seguir estas etapas:
 
 1. Abrir o `Terminal Emulator`. Você pode fazer isso pressionando:
 
@@ -140,117 +128,82 @@ Para instalar o `mousetrail` no `Linux Ubuntu` quando o pacote estiver disponív
     Ctrl + Alt + T
     ```
 
-2. Digitar os comandos a seguir e pressionar `Enter`:
+2. Digitar o bloco completo a seguir e pressionar `Enter`:
 
     ```bash
+    sudo apt clean
+    sudo apt autoclean
+    sudo apt autoremove -y
     sudo apt update
-    apt policy mousetrail
-    sudo apt install mousetrail -y
-    mousetrail
-    ```
-
-Se `apt policy` não apresentar um candidato, não há instalação pelo `apt` com as fontes configuradas.
-
-## 4. Executar e verificar o `mousetrail`
-
-1. Iniciar o programa em uma sessão `X11` com o comando:
-
-    ```bash
-    mousetrail
-    ```
-
-2. Para verificar se o comando está instalado, executar:
-
-    ```bash
+    sudo apt --fix-broken install
+    sudo apt clean
+    sudo apt list --upgradable
+    sudo apt full-upgrade -y
+    sudo apt install git build-essential libx11-dev libxext-dev libxfixes-dev -y
+    git clone https://github.com/OneTrueC/mouseTrail.git "$HOME/mouseTrail"
+    make -C "$HOME/mouseTrail"
+    cd "$HOME/mouseTrail"
+    sudo mkdir -p /usr/local/bin /usr/local/share/man/man1
+    sudo make install
+    mkdir -p "$HOME/.config/autostart"
+    cat > "$HOME/.config/autostart/mousetrail.desktop" <<'EOF'
+    [Desktop Entry]
+    Type=Application
+    Name=MouseTrail
+    Comment=Rastro visual do ponteiro do mouse
+    Exec=/usr/local/bin/mousetrail
+    Terminal=false
+    X-GNOME-Autostart-enabled=true
+    EOF
     command -v mousetrail
-    apt policy mousetrail
     ```
 
-O programa depende de uma conexão com o servidor `X`; se não conseguir conectar, confirmar se a sessão gráfica atual usa `X11`.
+O bloco de instalação pressupõe que `~/mouseTrail` ainda não exista. Se o programa já tiver sido clonado, executar a compilação e a instalação a partir desse diretório, sem repetir `git clone`.
 
-## Compatibilidade
+## 4. Configurar a inicialização automática
 
-- A disponibilidade do pacote deve ser confirmada para cada versão e conjunto de repositórios do `Linux Ubuntu`.
-- O `mousetrail` upstream usa o sistema de janelas `X11`.
-- `gnome-mousetrap` é um pacote diferente e não implementa o mesmo rastro visual do ponteiro.
+O arquivo `.desktop` em `~/.config/autostart/` inicia o programa quando o ambiente gráfico abrir a sessão do usuário.
 
-## Licença
+1. Criar o diretório de _autostart_ e gravar a entrada do aplicativo:
 
-Este repositório inclui o arquivo `LICENSE.txt`.
+    ```bash
+    mkdir -p "$HOME/.config/autostart"
+    printf '%s\n' '[Desktop Entry]' 'Type=Application' 'Name=MouseTrail' 'Comment=Rastro visual do ponteiro do mouse' 'Exec=/usr/local/bin/mousetrail' 'Terminal=false' 'X-GNOME-Autostart-enabled=true' > "$HOME/.config/autostart/mousetrail.desktop"
+    ```
 
-## Contato e suporte
+2. Iniciar o programa manualmente para confirmar que a sessão gráfica consegue executá-lo:
 
-Para dúvidas ou problemas, consultar o repositório upstream `OneTrueC/mouseTrail` e a documentação da versão instalada do `Linux Ubuntu`.
+    ```bash
+    mousetrail
+    ```
+
+O programa permanece ativo enquanto cria o rastro. Pressionar `Ctrl + C` no terminal para encerrá-lo. No próximo início de sessão gráfica, o ambiente deverá iniciá-lo pelo arquivo de _autostart_.
+
+3. Para impedir que ele inicie automaticamente, remover a entrada:
+
+    ```bash
+    rm "$HOME/.config/autostart/mousetrail.desktop"
+    ```
+
+## Compatibilidade e observações
+
+- O projeto depende de uma sessão `X11`, dos arquivos de desenvolvimento `libx11-dev` e `libxfixes-dev`, e de um compilador C.
+- A compilação produz o executável `mousetrail`; o `Makefile` instala o binário e a página de manual em `/usr/local`.
+- O `autostart` é configurado somente para o usuário atual e executa o binário instalado em `/usr/local/bin/mousetrail`.
+- O projeto não publica uma medição de consumo de recursos. Comparar o uso de CPU e memória no ambiente local antes de decidir manter a inicialização automática.
+
+## Licença e suporte
+
+O repositório upstream inclui a licença `GNU GPL` versão 3 ou posterior. Consultar o arquivo `LICENSE` distribuído com o código-fonte.
+
+Para relatar problemas ou consultar o código, acessar `OneTrueC/mouseTrail` no `GitHub`.
 
 ## Referências
 
 [1] OPENAI. **Instalar o `mousetrail` no `linux ubuntu` pelo `terminal emulator`**. Disponível em: <https://chatgpt.com/g/g-p-6980caf949648191ad6acfcdbe590f9e-instalar/c/6ac754e0-d664-83ea-906a-50fab09b9f73>. ChatGPT. Acessado em: 08/10/2026.
 
-[2] ONETRUEC. **mousetrail**. Disponível em: <https://github.com/OneTrueC/mouseTrail>. Acessado em: 08/10/2026.
+[2] ONETRUEC. **Mousetrail: programa de rastro do ponteiro para `X11`**. Disponível em: <https://github.com/OneTrueC/mouseTrail>. GitHub. Acessado em: 08/10/2026.
 
-[3] UBUNTU. **Gerenciar pacotes e instalar software**. Disponível em: <https://ubuntu.com/server/docs/package-management/>. Acessado em: 08/10/2026.
+[3] UBUNTU. **Gerenciar pacotes e instalar _software_**. Disponível em: <https://ubuntu.com/server/docs/package-management/>. Acessado em: 08/10/2026.
 
-[4] UBUNTU. **Pesquisa de pacotes do Ubuntu**. Disponível em: <https://packages.ubuntu.com/search?keywords=mousetrail>. Acessado em: 08/10/2026.
-
-<!-- LICENÇA -->
-## Licença
-
-Distribuído sob a licença `MIT`. Consulte `LICENSE.txt` para obter mais informações.
-
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-<!-- ROTEIRO -->
-## Roteiro
-
-- [ ] Adicionar registro de alterações
-- [ ] Adicionar links de volta ao topo
-- [ ] Adicionar modelos adicionais com exemplos
-- [ ] Suporte multilíngue
-
-Consulte os problemas abertos para obter uma lista completa dos recursos propostos.
-
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-
-<!-- CONTRIBUIÇÔES -->
-## Contribuições
-
-Explique como contribuir (fork, branch, PR, issues).
-
-1. Bifurque o projeto
-2. Crie sua ramificação (`git checkout -b feature/NovaFuncionalidade`)
-3. Confirme suas alterações (`git commit -m 'Describe change'`)
-4. Envie para a filial (`git push origin feature/NovaFuncionalidade`)
-5. Abra uma solicitação `pull`
-
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Agradecimentos
-
-* [Best README Template](https://github.com/othneildrew/Best-README-Template?tab=readme-ov-file)
-
-* [Choose an Open Source License](https://choosealicense.com)
-
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-
-* [Img Shields](https://shields.io)
-
-* [GitHub Pages](https://pages.github.com)
-
-* [Font Awesome](https://fontawesome.com)
-
-* [React Icons](https://react-icons.github.io/react-icons/search)
-
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
+[4] FREEDESKTOP. **Especificação de inicialização automática de aplicativos**. Disponível em: <https://specifications.freedesktop.org/autostart/latest/>. Acessado em: 08/10/2026.
