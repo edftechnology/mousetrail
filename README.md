@@ -29,267 +29,168 @@
 
 
 
+# Como instalar/configurar/usar o `mousetrail` no `Linux Ubuntu`
+
 ## Resumo
 
-Resumo genérico do projeto. Explique o problema, o objetivo e o valor da solução em 2-4 linhas.
+Este guia apresenta como procurar e instalar o `mousetrail` pelo `apt` no `Linux Ubuntu`, verificar a instalação e iniciar o programa.
 
 ## _Abstract_
 
-_Generic abstract in English. Summarize the purpose, scope, and outputs in 2-4 lines._
-
-
+_This guide explains how to find and install `mousetrail` with `apt` on `Linux Ubuntu`, verify the installation, and launch the program._
 
 ## Descrição
 
-`<nome_da_aplicacao>`
+### `mousetrail`
 
-Colocar a descrição da aplicação/subaplicação aqui.
+O `mousetrail` cria um rastro visual para o ponteiro do mouse no sistema de janelas `X11` e pode aplicar um efeito de arco-íris. O projeto upstream é disponibilizado como código-fonte no GitHub.
 
-<!-- COMEÇANDO -->
-### Começando
+## Pré-requisitos
 
-Este template mostra como documentar a configuração local do projeto. Substitua pelos passos reais.
+- Usar uma sessão gráfica baseada em `X11`; o projeto não declara suporte a sessões `Wayland`.
+- Ter permissão para usar `sudo`.
+- Ter os repositórios oficiais do `Linux Ubuntu` configurados e acesso à internet.
+- O pacote precisa estar disponível nas fontes `apt` habilitadas para a versão instalada do `Linux Ubuntu`.
 
+## 1. Abrir o `Terminal Emulator`
 
-
-### Pré-requisitos
-
-Lista genérica de ferramentas necessárias. Ajuste versões e remova o que não se aplica.
-
-* [![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-
-* [![Anaconda](https://img.shields.io/badge/Anaconda-4.x-44A833?style=flat-square&logo=anaconda&logoColor=white)](https://www.anaconda.com/)
-
-* [![Git](https://img.shields.io/badge/Git-2.x-F05032?style=flat-square&logo=git&logoColor=white)](https://git-scm.com/)
-
-* [![VS Code](https://img.shields.io/badge/VS%20Code-1.x-007ACC?style=flat-square&logo=visual-studio-code&logoColor=white)](https://code.visualstudio.com/) ou qualquer IDE compatível
-
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-
-## Guia de instalação
-
-### Instalar o Git
-
-Explique como instalar o Git ou remova esta seção se não for necessária.
-
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-## Guia de instalação
-
-### Instalar o Git
-
-Reforço do conteúdo ou seção extra. Mantenha ou remova conforme o uso do template.
-
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-#### `Windows` [2]
-
-Explique como configurar SSH no Windows (ou ajuste para o provedor desejado).
-
-1. Verifique se o Git está instalado.
-2. Abra o Git Bash.
-3. Gere uma chave SSH (`ssh-keygen -t rsa -C "seu_email@exemplo.com"`).
-4. Adicione a chave no provedor (GitHub/GitLab/Bitbucket).
-
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-### Atualizar pacotes `pip` e `setuptools` [3]
-
-Exemplo genérico de atualização de pacotes:
-
-1. `pip install --upgrade pip`
-2. `pip install --upgrade setuptools`
-3. `pip install --upgrade wheel`
-
-
-
-### Clonar o repositório do Git e instalar dependências
-
-#### `Linux`
-
-1. **Clone o repositório:**
-
-  - **Pelo terminal:** `git clone git@github.com:SEU-USUARIO/SEU-PROJETO.git`
-
-  - **(Ou)** baixar o `.zip` na página do GitHub
-
-  <p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-#### `Windows`
-
-1. **Clone o repositório:**
-
-  - **Pelo terminal:** `git clone git@github.com:SEU-USUARIO/SEU-PROJETO.git`
-
-  - (Ou) baixar o `.zip` na página do GitHub
-
-  <p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-## Como executar a aplicação
-
-### Executar a partir do `Terminal Emulator`
-
-1. Exemplo genérico de execução:
+1. Abrir o `Terminal Emulator`. Você pode fazer isso pressionando:
 
 ```bash
-python3 main.py --input caminho/para/arquivo --output caminho/para/saida
+Ctrl + Alt + T
 ```
 
-<p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
+2. Certifique-se de que seu sistema esteja limpo e atualizado.
 
+    2.1 Limpar o `cache` do gerenciador de pacotes `apt`. Especificamente, ele remove todos os arquivos de pacotes (`.deb`) baixados pelo `apt` e armazenados em `/var/cache/apt/archives/`. Digite o seguinte comando:
 
+    ```bash
+    sudo apt clean
+    ```
 
+    2.2 Remover pacotes `.deb` antigos ou duplicados do `cache` local. É útil para liberar espaço, pois remove apenas os pacotes que não podem mais ser baixados (ou seja, versões antigas de pacotes que foram atualizados). Digite o seguinte comando:
 
-### Executar a partir da `Graphical User Interface (GUI)`
+    ```bash
+    sudo apt autoclean
+    ```
 
-1. Exemplo genérico de execução:
+    2.3 Remover pacotes que foram automaticamente instalados para satisfazer as dependências de outros pacotes e que não são mais necessários. Digite o seguinte comando:
 
-```bash
-python3 scripts/app_gui.py
-```
+    ```bash
+    sudo apt autoremove -y
+    ```
 
+    2.4 Buscar as atualizações disponíveis para os pacotes que estão instalados em seu sistema. Digite o seguinte comando e pressione `Enter`:
 
+    ```bash
+    sudo apt update
+    ```
 
-## Mostrar ajuda
+    2.5 **Corrigir pacotes quebrados**: Isso atualizará a lista de pacotes disponíveis e tentará corrigir pacotes quebrados ou com dependências ausentes:
 
-1. Exemplo genérico de ajuda:
+    ```bash
+    sudo apt --fix-broken install
+    ```
 
-```bash
-python3 main.py --help
-```
+    2.6 Limpar o `cache` do gerenciador de pacotes `apt` novamente:
 
+    ```bash
+    sudo apt clean
+    ```
 
+    2.7 Para ver a lista de pacotes a serem atualizados, digite o seguinte comando e pressione `Enter`:
 
-### Exemplo de Saída Esperada
+    ```bash
+    sudo apt list --upgradable
+    ```
 
-Exemplo genérico (substitua pelo help real do projeto):
+    2.8 Realmente atualizar os pacotes instalados para as suas versões mais recentes, com base na última vez que você executou `sudo apt update`. Digite o seguinte comando e pressione `Enter`:
 
-```bash
-usage: main.py [-h] --input INPUT [--output OUTPUT]
-```
+    ```bash
+    sudo apt full-upgrade -y
+    ```
 
+## 3. Procurar o pacote `mousetrail`
 
+Antes de instalar, verificar se o pacote está nos repositórios habilitados para a versão do `Linux Ubuntu` em uso.
 
-## O que o aplicativo faz?
+1. Atualizar o índice de pacotes e procurar o nome exato:
 
-Describe in English, at a high level, what the application does and the main outputs.
+    ```bash
+    sudo apt update
+    apt search '^mousetrail$'
+    apt policy mousetrail
+    ```
 
-- Example capability 1
-- Example capability 2
-- Example capability 3
+2. Se `apt policy mousetrail` mostrar um candidato, instalar o pacote:
 
+    ```bash
+    sudo apt install mousetrail -y
+    ```
 
+3. Se não houver candidato e a busca não listar o pacote, os repositórios `apt` configurados não fornecem `mousetrail`. Não instalar `gnome-mousetrap` como substituto: é outro aplicativo, voltado ao controle do ponteiro por movimentos da cabeça. Consulte a página upstream indicada em **Referências** para verificar as opções disponibilizadas pelo desenvolvedor.
 
+## 1.1 Código completo para configurar/instalar/usar
 
-## O que o aplicativo exibe como saída(s)
+Para instalar o `mousetrail` no `Linux Ubuntu` quando o pacote estiver disponível nos repositórios configurados, seguir estas etapas:
 
-# Relatório de Análise de Dados
+1. Abrir o `Terminal Emulator`. Você pode fazer isso pressionando:
 
-## 1. Introdução
+    ```bash
+    Ctrl + Alt + T
+    ```
 
-- Objetivo da análise: descrição genérica.
-- Descrição do conjunto de dados analisado: origem, tamanho, formato.
-- Metodologia utilizada para a análise.
+2. Digitar os comandos a seguir e pressionar `Enter`:
 
-## 2. Estatísticas Gerais do Conjunto de Dados
+    ```bash
+    sudo apt update
+    apt policy mousetrail
+    sudo apt install mousetrail -y
+    mousetrail
+    ```
 
-- Número total de variáveis.
-- Número total de registros.
-- Tipos de dados por variável.
-- Resumo da ocupação de memória.
+Se `apt policy` não apresentar um candidato, não há instalação pelo `apt` com as fontes configuradas.
 
-## 3. Qualidade dos Dados
+## 4. Executar e verificar o `mousetrail`
 
-- Valores faltantes: contagem e percentual.
-- Valores únicos por variável.
-- Distribuição de valores nulos ou infinitos.
-- Detecção de espaços em branco no início/fim.
+1. Iniciar o programa em uma sessão `X11` com o comando:
 
-## 4. Estatísticas Descritivas das Variáveis Numéricas
+    ```bash
+    mousetrail
+    ```
 
-- Contagem de valores válidos.
-- Média, mediana, moda.
-- Desvio padrão e variância.
-- Valor mínimo e máximo.
-- Quartis.
+2. Para verificar se o comando está instalado, executar:
 
-## 5. Análise de Outliers
+    ```bash
+    command -v mousetrail
+    apt policy mousetrail
+    ```
 
-- Critério de outliers (ex.: 1.5x IQR).
-- Variáveis com maior presença de outliers.
+O programa depende de uma conexão com o servidor `X`; se não conseguir conectar, confirmar se a sessão gráfica atual usa `X11`.
 
-## 6. Correlações Entre Variáveis
+## Compatibilidade
 
-- Matriz de correlação.
-- Variáveis altamente correlacionadas.
+- A disponibilidade do pacote deve ser confirmada para cada versão e conjunto de repositórios do `Linux Ubuntu`.
+- O `mousetrail` upstream usa o sistema de janelas `X11`.
+- `gnome-mousetrap` é um pacote diferente e não implementa o mesmo rastro visual do ponteiro.
 
-## 7. Estatísticas de Variáveis Categóricas
+## Licença
 
-- Contagem de ocorrências por categoria.
-- Percentual de distribuição por categoria.
+Este repositório inclui o arquivo `LICENSE.txt`.
 
-## 8. Análise de Tendências Temporais (se aplicável)
+## Contato e suporte
 
-- Distribuição temporal dos dados.
-- Identificação de padrões sazonais.
+Para dúvidas ou problemas, consultar o repositório upstream `OneTrueC/mouseTrail` e a documentação da versão instalada do `Linux Ubuntu`.
 
-## 9. Conclusões e Próximos Passos
+## Referências
 
-- Resumo dos principais insights.
-- Sugestões de melhorias/transformações.
-- Próximos passos.
+[1] OPENAI. **Instalar o `mousetrail` no `linux ubuntu` pelo `terminal emulator`**. Disponível em: <https://chatgpt.com/g/g-p-6980caf949648191ad6acfcdbe590f9e-instalar/c/6ac754e0-d664-83ea-906a-50fab09b9f73>. ChatGPT. Acessado em: 08/10/2026.
 
+[2] ONETRUEC. **mousetrail**. Disponível em: <https://github.com/OneTrueC/mouseTrail>. Acessado em: 08/10/2026.
 
-## Gráficos Essenciais no Relatório
+[3] UBUNTU. **Gerenciar pacotes e instalar software**. Disponível em: <https://ubuntu.com/server/docs/package-management/>. Acessado em: 08/10/2026.
 
-- Histogramas
-- Boxplots
-- Heatmap de correlação
-- Gráfico de dispersão
-- Gráficos de barras
-- Linha do tempo (se aplicável)
-
-
-
-## 1. Função da Aplicação
-
-Descrição genérica da função principal do módulo.
-
-### 1.1 Entrada(s)
-
-1. Formatos de arquivo suportados (ex.: `.csv`, `.xlsx`).
-
-### 1.2 Saída(s)
-
-1. Descrição das saídas esperadas.
-
-
-
-## 2. Observação(ões)
-
-1. Observações gerais e boas práticas.
-2. Restrições conhecidas.
-
-
-
-# 3. Futura(s) Melhoria(s)
-
-- Lista de melhorias planejadas.
-
-
+[4] UBUNTU. **Pesquisa de pacotes do Ubuntu**. Disponível em: <https://packages.ubuntu.com/search?keywords=mousetrail>. Acessado em: 08/10/2026.
 
 <!-- LICENÇA -->
 ## Licença
@@ -353,13 +254,3 @@ Explique como contribuir (fork, branch, PR, issues).
 * [React Icons](https://react-icons.github.io/react-icons/search)
 
 <p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
-
-
-
-
-## Referências
-
-[1] Fonte ou documentação relevante.
-[2] Artigo, tutorial ou manual adicional.
-[3] Outro link útil.
-
