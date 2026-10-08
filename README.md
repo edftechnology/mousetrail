@@ -160,24 +160,77 @@ O bloco de instalação pressupõe que `~/mouseTrail` ainda não exista. Se o pr
 
 ## 4. Configurar a inicialização automática
 
+### 4.1 Ativar o `mousetrail`
+
 O arquivo `.desktop` em `~/.config/autostart/` inicia o programa quando o ambiente gráfico abrir a sessão do usuário.
 
-1. Criar o diretório de _autostart_ e gravar a entrada do aplicativo:
+1. Criar o diretório de _autostart_:
 
     ```bash
-    mkdir -p "$HOME/.config/autostart"
-    printf '%s\n' '[Desktop Entry]' 'Type=Application' 'Name=MouseTrail' 'Comment=Rastro visual do ponteiro do mouse' 'Exec=/usr/local/bin/mousetrail' 'Terminal=false' 'X-GNOME-Autostart-enabled=true' > "$HOME/.config/autostart/mousetrail.desktop"
+    mkdir -pv "$HOME/.config/autostart"
     ```
 
-2. Iniciar o programa manualmente para confirmar que a sessão gráfica consegue executá-lo:
+2. Criar o arquivo _desktop_ para o `mousetrail`:
 
     ```bash
-    mousetrail
+    touch mousetrail
     ```
 
-O programa permanece ativo enquanto cria o rastro. Pressionar `Ctrl + C` no `Terminal Emulator` para encerrá-lo. No próximo início de sessão gráfica, o ambiente deverá iniciá-lo pelo arquivo de _autostart_.
+3. Abrir o arquivo com o `nano`:
 
-3. Para impedir que ele inicie automaticamente, remover a entrada:
+    ```bash
+    sudo nano mousetrail
+    ```
+
+4. Inserir o conteúdo dentro do arquivo `~/.config/autostart/mousetrail.desktop`:
+
+    ```bash
+    [Desktop Entry]
+    Type=Application
+    Name=mouseTrail
+    Comment=Cursor mouse trail
+    Exec=/home/edenedfsls/Documents/Downloads/unix/ubuntu/mousetrail/docs/mouseTrail
+    Terminal=false
+    Hidden=false
+    X-GNOME-Autostart-enabled=true
+    ```
+
+5. Iniciar o programa manualmente para confirmar que a sessão gráfica consegue executá-lo:
+
+    ```bash
+    gtk-launch mousetrail
+    ```
+
+    O programa permanece ativo enquanto cria o rastro. Pressionar `Ctrl + C` no `Terminal Emulator` para encerrá-lo. No próximo início de sessão gráfica, o ambiente deverá iniciá-lo pelo arquivo de _autostart_.
+
+6. Executar o `autostart` imediatamente. Utilize:
+
+    ```bash
+    gio launch "$HOME/.config/autostart/mousetrail.desktop"
+    ```
+
+    Esse comando executa o aplicativo definido no arquivo `.desktop`, simulando sua inicialização, sem precisar reiniciar o sistema.
+
+7. Verificar se está executando, com o comando:
+
+    ```bash
+    pgrep -af mousetrail
+    ```
+    
+    Ou apenas arraste o _mouse_ e verifique se o rastro aparece.
+
+8. Encerrar quando desejar:
+
+    ```bash
+    pkill -x mousetrail
+    ```
+
+**Observação**: o `gio launch` executa somente esse aplicativo, não reinicia todo o mecanismo de `autostart` do `XFCE`.
+Se funcionar, o mesmo arquivo em `~/.config/autostart/` deverá iniciar o `mousetrail` automaticamente no próximo _login_.
+
+### 4.2 Desativar o `mousetrail`
+
+1. Para impedir que ele inicie automaticamente, remover a entrada:
 
     ```bash
     rm "$HOME/.config/autostart/mousetrail.desktop"
